@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Сватбени снимки – И & Т</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-image: url('490711875_2701812706677927_220141782618080012_n.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #fff;
+      text-align: center;
+      padding: 2em;
+      backdrop-filter: brightness(0.85) blur(2px);
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.55);
+      padding: 2em;
+      border-radius: 16px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .initials {
+      font-size: 3em;
+      font-weight: bold;
+      color: #ffd6ea;
+      margin-bottom: 0.2em;
+    }
+
+    .date {
+      font-size: 1.5em;
+      color: #ffb3d1;
+      margin-bottom: 1.5em;
+    }
+
+    .welcome {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 2em;
+    }
+
+    .qr-container {
+      margin: 2em 0;
+    }
+
+    .qr-link {
+      font-size: 1.1em;
+      color: #fff3f3;
+      margin-top: 1em;
+      display: inline-block;
+      background: #ff88aa;
+      padding: 0.5em 1em;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+
+    input[type="file"] {
+      margin-top: 1em;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: center;
+      margin-top: 2em;
+    }
+
+    .gallery img {
+      width: 200px;
+      height: auto;
+      border: 4px solid #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    iframe {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="initials">И & Т</div>
+    <div class="date">21.09.2025</div>
+
+    <div class="welcome">
+      <h2>Добре дошли в страницата на Ирина и Тихомир!</h2>
+      <p>
+        Благодарим ви, че бяхте част от нашия специален ден 💕<br>
+        Тук можете да <strong>качите вашите снимки и спомени</strong> от сватбата ни,<br>
+        както и да разгледате снимки, споделени от нашите приятели.<br>
+        Нека заедно създадем едно красиво дигитално албумче 📸✨
+      </p>
+    </div>
+
+    <div class="qr-container">
+      <h2>Сканирай QR кода, за да качиш снимки 📱</h2>
+      <canvas id="qrcode"></canvas>
+      <br />
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSf3QZPWrm4xTSIuA1ACuRshYDnnTUK1vPm449teZ5MvThQ4Rg/viewform?usp=header">Отвори формата</a>
+    </div>
+
+    <h2>Преглед на снимки (локално качени тук)</h2>
+    <input type="file" id="imageInput" accept="image/*" multiple />
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <!-- Фонова музика от YouTube (Bruno Mars - Just The Way You Are) -->
+  <iframe width="0" height="0" src="https://www.youtube.com/embed/LjhCEhWiKXk?autoplay=1&loop=1&playlist=LjhCEhWiKXk" 
+          frameborder="0" allow="autoplay" allowfullscreen></iframe>
+
+  <script>
+    const input = document.getElementById('imageInput');
+    const gallery = document.getElementById('gallery');
+
+    input.addEventListener('change', () => {
+      gallery.innerHTML = "";
+
+      Array.from(input.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          gallery.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    const googleDriveFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSf3QZPWrm4xTSIuA1ACuRshYDnnTUK1vPm449teZ5MvThQ4Rg/viewform?usp=header";
+
+    QRCode.toCanvas(document.getElementById('qrcode'), googleDriveFormURL, { width: 200 }, function (error) {
+      if (error) console.error(error);
+    });
+  </script>
+</body>
+</html>
